@@ -1,4 +1,2 @@
-Hi I'm gayyyyyyy
-- Amelia Yamato
-Hi I'm gyyyyyyy
-- Pinxi would bang Ian for $50. 
+Git repo for Orbital 2020
+By Tan Pinxi & Amelia Yamato
