@@ -113,21 +113,24 @@ var timeout = null;
 
         const url = window.location.href;
 
-        var storedData = $(document).cookie;
+        const storedData = document.cookie;
         var sitesArray = [];
 
         console.log(storedData);
 
         if (typeof storedData !== 'undefined' && storedData.length > 0){
-            const section = storedData.split(";")[0];
-            if (section.length > 6){
-                sitesArray = section.substring(6, section.length).split(",");
+            if (storedData.indexOf("sites=") != -1){
+                const section = storedData.substring(storedData.indexOf("sites="), storedData.length).split(";")[0];
+                if (section.length > 6){
+                    sitesArray = section.substring(6, section.length).split(",");
+                }
             }
         }
 
         if (sitesArray.length == 0){
             const sites = getMonitoredSites();
-            $(document).cookie = "sites=" + sites + "; max-age=3600";
+            document.cookie = "sites=" + sites + "; max-age=3600";
+            console.log("Cookie stored: " + document.cookie);
             sitesArray = sites.split(",");
         }
 
