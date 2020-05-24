@@ -10,19 +10,21 @@
 // @grant        GM.setValue
 // @grant        GM.deleteValue
 // @grant        GM.listValues
+// @grant        GM.xmlHttpRequest
 // @require      http://code.jquery.com/jquery-latest.js
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
 // ==/UserScript==
 
 var isMonitored;
 var timeout = null;
-var monitoredSites = ["facebook.com", "instagram.com", "youtube.com", "reddit.com", "google.com"];
 
 (function() {
     'use strict';
 
     $(window).on("load", () => {
+
         console.log("Ready/Loaded");
+
         isMonitored = updateCookie();
         if (!isMonitored){
             console.log("Clean Site");
@@ -45,9 +47,6 @@ var monitoredSites = ["facebook.com", "instagram.com", "youtube.com", "reddit.co
         }
     });
 
-    $(window).on('hashchange', () => {
-    }).trigger('hashchange');
-
     function updateCookie() {
 
         const site = getSite();
@@ -60,7 +59,7 @@ var monitoredSites = ["facebook.com", "instagram.com", "youtube.com", "reddit.co
 
                 if (x.length == undefined || x.length == 0){
                     console.log("New site accessed at " + timeNow);
-                    GM.setValue(currentSite, [timeNow]);
+                    GM.setValue(site, [timeNow]);
                 }
                 else if (x.length == 1){
                     console.log("Site last checked at " + timeNow);
@@ -86,25 +85,83 @@ var monitoredSites = ["facebook.com", "instagram.com", "youtube.com", "reddit.co
 
         GM.getValue(site, []).then(x => {
             if (x.length == 2){
-                const diff = x[1] - x[0];
-                storeUsage(site, diff);
+                const diff = (x[1] - x[0])/1000/60;
+                console.log(diff);
+                if (diff > 0){
+                    //storeUsage(site, diff);
+                }
             }
         });
+
+        GM.deleteValue(site);
     }
 
     function storeUsage(site, diff){
+
+        const data = { "site":site, "time":diff };
+        const jsonData = JSON.stringify(data);
+
+        GM.xmlHttpRequest({
+            method:     "POST",
+            url:        "http://localhost/LogData.php",
+            data:       jsonData,
+            headers:    {"Content-Type": "application/json"}
+        });
     }
 
     function getSite(){
 
         const url = window.location.href;
 
-        for (var i = 0; i < monitoredSites.length; i++){
-            if (url.includes(monitoredSites[i])){
-                return monitoredSites[i];
+        var storedData = $(document).cookie;
+        var sitesArray = [];
+
+        console.log(storedData);
+
+        if (typeof storedData !== 'undefined' && storedData.length > 0){
+            const section = storedData.split(";")[0];
+            if (section.length > 6){
+                sitesArray = section.substring(6, section.length).split(",");
+            }
+        }
+
+        if (sitesArray.length == 0){
+            const sites = getMonitoredSites();
+            $(document).cookie = "sites=" + sites + "; max-age=3600";
+            sitesArray = sites.split(",");
+        }
+
+        for (var i = 0; i < sitesArray.length; i++){
+            if (url.includes(sitesArray[i])){
+                console.log(sitesArray[i]);
+                return sitesArray[i];
             }
         }
         return "";
+    }
+
+    function getMonitoredSites(){
+
+        return "facebook.com,instagram.com,youtube.com,reddit.com,google.com";
+
+        GM.xmlHttpRequest({
+            method:     "POST",
+            url:        "http://localhost/GetSites.php",
+            data:       jsonData,
+            headers:    {"Content-Type": "application/json"}
+        }).then(siteArray => {
+
+            var storageString = "";
+
+            if (siteArray.length > 0){
+                storageString += siteArray[0]["website"];
+            }
+
+            for (var i = 1; i < siteArray.length; i++){
+                storageString += "," + siteArray[i]["website"];
+            }
+            return storageString;
+        });
     }
 
 })();
