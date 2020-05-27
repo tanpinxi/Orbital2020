@@ -68,8 +68,17 @@ var timeout = null;
                 }
                 else if (x.length == 2){
                     console.log("Site last check updated to " + timeNow);
-                    x[1] = timeNow;
-                    GM.setValue(site, x);
+
+                    if (x[0].getDate() === timeNow.getDate()){
+                        x[1] = timeNow;
+                        GM.setValue(site, x);
+                    }
+                    else {
+                        var midnight = new Date(x[0]).setHours(24,0,0,0);
+                        const date = x[0].getDate();
+                        storeUsage(site, date, (midnight - x[0])/1000/60);
+                        GM.setValue(site, [timeNow]);
+                    }
                 }
                 else{
                     console.log("Cookie has length " + x.length);
@@ -88,7 +97,8 @@ var timeout = null;
                 const diff = (x[1] - x[0])/1000/60;
                 console.log(diff);
                 if (diff > 0){
-                    //storeUsage(site, diff);
+                    const date = x[1].getDate();
+                    //storeUsage(site, date, diff);
                 }
             }
         });
@@ -96,14 +106,14 @@ var timeout = null;
         GM.deleteValue(site);
     }
 
-    function storeUsage(site, diff){
+    function storeUsage(site, date, diff){
 
-        const data = { "site":site, "time":diff };
+        const data = { "site":site, "date":date, "time":diff };
         const jsonData = JSON.stringify(data);
 
         GM.xmlHttpRequest({
             method:     "POST",
-            url:        "http://localhost/LogData.php",
+            url:        "http://localhost:8080/storeusage",
             data:       jsonData,
             headers:    {"Content-Type": "application/json"}
         });
@@ -149,7 +159,7 @@ var timeout = null;
 
         GM.xmlHttpRequest({
             method:     "POST",
-            url:        "http://localhost/GetSites.php",
+            url:        "http://localhost:8080/getsites",
             data:       jsonData,
             headers:    {"Content-Type": "application/json"}
         }).then(siteArray => {

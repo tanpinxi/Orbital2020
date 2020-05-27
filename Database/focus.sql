@@ -13,12 +13,35 @@ USE `focusDB`;
 
 /*Table structure for table `focus_data` */
 
-DROP TABLE IF EXISTS `website_usage`;
+DROP TABLE IF EXISTS `websites`;
+DROP TABLE IF EXISTS `usage_data`;
 
-CREATE TABLE `website_usage` (
-  `website` varchar(255) NOT NULL,
+CREATE TABLE `websites` (
+  `site` varchar(255) NOT NULL,
   `selected` boolean NOT NULL DEFAULT TRUE, /* if the website is selected, we tally it in the dashboard */
-  `usage` int NOT NULL DEFAULT 0, /* could be int too, can change later*/
   
-  PRIMARY KEY (`website`)
-)
+  PRIMARY KEY (`site`)
+);
+
+CREATE TABLE `usage_data` (
+  `site` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `usage` int NOT NULL DEFAULT 0, /* could be int too, can change later*/
+
+  PRIMARY KEY (`site`,`date`)
+);
+
+DELIMITER $$
+CREATE TRIGGER `default_date` BEFORE INSERT ON `usage_data` FOR EACH ROW
+  if ( isnull(new.date) ) then
+    set new.date = curdate();
+  end if;
+$$
+DELIMITER ;
+
+/* Sample data*/
+INSERT INTO `websites` (`site`) VALUES ("facebook.com");
+INSERT INTO `websites` (`site`) VALUES ("instagram.com");
+INSERT INTO `websites` (`site`) VALUES ("youtube.com");
+INSERT INTO `websites` (`site`) VALUES ("reddit.com");
+INSERT INTO `websites` (`site`) VALUES ("google.com");
