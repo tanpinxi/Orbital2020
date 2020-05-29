@@ -98,7 +98,7 @@ var timeout = null;
                 console.log(diff);
                 if (diff > 0){
                     const date = x[1].getDate();
-                    //storeUsage(site, date, diff);
+                    storeUsage(site, date, diff);
                 }
             }
         });
@@ -126,7 +126,7 @@ var timeout = null;
         const storedData = document.cookie;
         var sitesArray = [];
 
-        console.log(storedData);
+        console.log("Browser cookies: " + storedData);
 
         if (typeof storedData !== 'undefined' && storedData.length > 0){
             if (storedData.indexOf("sites=") != -1){
@@ -139,9 +139,12 @@ var timeout = null;
 
         if (sitesArray.length == 0){
             const sites = getMonitoredSites();
-            document.cookie = "sites=" + sites + "; max-age=3600";
-            console.log("Cookie stored: " + document.cookie);
-            sitesArray = sites.split(",");
+
+            if (typeof sites !== 'undefined' && sites.localeCompare("") != 0){
+                document.cookie = "sites=" + sites + "; max-age=3600";
+                console.log("Cookie as stored: " + document.cookie);
+                sitesArray = sites.split(",");
+            }
         }
 
         for (var i = 0; i < sitesArray.length; i++){
@@ -155,25 +158,29 @@ var timeout = null;
 
     function getMonitoredSites(){
 
-        return "facebook.com,instagram.com,youtube.com,reddit.com,google.com";
+        //return "facebook.com,instagram.com,youtube.com,reddit.com,google.com";
 
         GM.xmlHttpRequest({
             method:     "POST",
             url:        "http://localhost:8080/getsites",
-            data:       jsonData,
-            headers:    {"Content-Type": "application/json"}
-        }).then(siteArray => {
+            onload: function(response) {
 
-            var storageString = "";
+                console.log("Received JSON has length " + response.length);
 
-            if (siteArray.length > 0){
-                storageString += siteArray[0]["website"];
+                var storageString = "";
+
+                if (response.length > 0){
+                    storageString += response[0].site
+                }
+
+                for (var i = 1; i < response.length; i++){
+                    storageString += "," + response[i].site;
+                }
+
+                console.log("Received: " + storageString);
+
+                return storageString;
             }
-
-            for (var i = 1; i < siteArray.length; i++){
-                storageString += "," + siteArray[i]["website"];
-            }
-            return storageString;
         });
     }
 
