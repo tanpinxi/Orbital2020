@@ -121,8 +121,6 @@ var timeout = null;
 
     function getSite(){
 
-        const url = window.location.href;
-
         const storedData = document.cookie;
         var sitesArray = [];
 
@@ -133,19 +131,19 @@ var timeout = null;
                 const section = storedData.substring(storedData.indexOf("sites="), storedData.length).split(";")[0];
                 if (section.length > 6){
                     sitesArray = section.substring(6, section.length).split(",");
+                    return findSite(sitesArray);
                 }
             }
         }
 
         if (sitesArray.length == 0){
-            const sites = getMonitoredSites();
-
-            if (typeof sites !== 'undefined' && sites.localeCompare("") != 0){
-                document.cookie = "sites=" + sites + "; max-age=3600";
-                console.log("Cookie as stored: " + document.cookie);
-                sitesArray = sites.split(",");
-            }
+            return getMonitoredSites();
         }
+    }
+
+    function findSite(sitesArray){
+
+        const url = window.location.href;
 
         for (var i = 0; i < sitesArray.length; i++){
             if (url.includes(sitesArray[i])){
@@ -165,21 +163,32 @@ var timeout = null;
             url:        "http://localhost:8080/getsites",
             onload: function(response) {
 
-                console.log("Received JSON has length " + response.length);
+                const siteJson = JSON.stringify(response);
 
+                console.log(siteJson);
+
+                /*
                 var storageString = "";
 
-                if (response.length > 0){
-                    storageString += response[0].site
+                if (siteJson.length > 0){
+                    storageString += siteJson[0].site
                 }
 
-                for (var i = 1; i < response.length; i++){
-                    storageString += "," + response[i].site;
+                for (var i = 1; i < siteJson.length; i++){
+                    storageString += "," + siteJson[i].site;
                 }
 
                 console.log("Received: " + storageString);
 
-                return storageString;
+                if (typeof storageString !== 'undefined' && storageString.localeCompare("") != 0){
+                    document.cookie = "sites=" + storageString + "; max-age=3600";
+                    console.log("Cookie as stored: " + document.cookie);
+                    sitesArray = sites.split(",");
+                    return findSite(sitesArray);
+                }
+                */
+
+                return "";
             }
         });
     }
