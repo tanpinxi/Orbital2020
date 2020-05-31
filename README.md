@@ -1,5 +1,5 @@
 ## Git repo for Orbital 2020
-###### Level: Gemini
+##### Level: Gemini
 ###### By Tan Pinxi & Amelia Yamato
 
 ### Problem: 
