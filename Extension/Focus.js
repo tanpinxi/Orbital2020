@@ -158,6 +158,76 @@ var timeout = null;
 
         //return "facebook.com,instagram.com,youtube.com,reddit.com,google.com";
 
+        fetch('http://localhost:8080/getsites', {
+            method: 'POST', 
+            mode: 'cors', 
+            origin: "*",
+        }).then(response => {
+            
+            const siteJson = JSON.parse(response);
+
+            console.log(siteJson);
+
+            var storageString = "";
+
+            if (siteJson.length > 0){
+                storageString += siteJson[0].site
+            }
+
+            for (var i = 1; i < siteJson.length; i++){
+                storageString += "," + siteJson[i].site;
+            }
+
+            console.log("Received: " + storageString);
+
+            if (typeof storageString !== 'undefined' && storageString.localeCompare("") != 0){
+                document.cookie = "sites=" + storageString + "; max-age=3600";
+                console.log("Cookie as stored: " + document.cookie);
+                sitesArray = storageString.split(",");
+                return findSite(sitesArray);
+            }
+
+            return "";
+        });
+
+        /*
+        var http = new XMLHttpRequest();
+        var server = "http://localhost:8080/getsites";
+        http.open("POST", server);
+        http.send();
+    
+        http.onreadystatechange = function() {
+            if (this.readyState === 4){
+                if (this.status === 200){
+
+                    const siteJson = JSON.parse(this.responseText);
+
+                    console.log(siteJson);
+
+                    var storageString = "";
+
+                    if (siteJson.length > 0){
+                        storageString += siteJson[0].site
+                    }
+
+                    for (var i = 1; i < siteJson.length; i++){
+                        storageString += "," + siteJson[i].site;
+                    }
+
+                    console.log("Received: " + storageString);
+
+                    if (typeof storageString !== 'undefined' && storageString.localeCompare("") != 0){
+                        document.cookie = "sites=" + storageString + "; max-age=3600";
+                        console.log("Cookie as stored: " + document.cookie);
+                        sitesArray = storageString.split(",");
+                        return findSite(sitesArray);
+                    }
+
+                    return "";
+                }
+            }
+        }
+
         GM.xmlHttpRequest({
             method:     "POST",
             url:        "http://localhost:8080/getsites",
@@ -167,7 +237,6 @@ var timeout = null;
 
                 console.log(siteJson);
 
-                /*
                 var storageString = "";
 
                 if (siteJson.length > 0){
@@ -183,14 +252,14 @@ var timeout = null;
                 if (typeof storageString !== 'undefined' && storageString.localeCompare("") != 0){
                     document.cookie = "sites=" + storageString + "; max-age=3600";
                     console.log("Cookie as stored: " + document.cookie);
-                    sitesArray = sites.split(",");
+                    sitesArray = storageString.split(",");
                     return findSite(sitesArray);
                 }
-                */
 
                 return "";
             }
         });
+        */
     }
 
 })();
