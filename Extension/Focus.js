@@ -98,7 +98,7 @@ var timeout = null;
                 console.log(diff);
                 if (diff > 0){
                     const date = x[1].getDate();
-                    //storeUsage(site, date, diff);
+                    storeUsage(site, date, diff);
                 }
             }
         });
@@ -121,28 +121,29 @@ var timeout = null;
 
     function getSite(){
 
-        const url = window.location.href;
-
         const storedData = document.cookie;
         var sitesArray = [];
 
-        console.log(storedData);
+        console.log("Browser cookies: " + storedData);
 
         if (typeof storedData !== 'undefined' && storedData.length > 0){
             if (storedData.indexOf("sites=") != -1){
                 const section = storedData.substring(storedData.indexOf("sites="), storedData.length).split(";")[0];
                 if (section.length > 6){
                     sitesArray = section.substring(6, section.length).split(",");
+                    return findSite(sitesArray);
                 }
             }
         }
 
         if (sitesArray.length == 0){
-            const sites = getMonitoredSites();
-            document.cookie = "sites=" + sites + "; max-age=3600";
-            console.log("Cookie stored: " + document.cookie);
-            sitesArray = sites.split(",");
+            return getMonitoredSites();
         }
+    }
+
+    function findSite(sitesArray){
+
+        const url = window.location.href;
 
         for (var i = 0; i < sitesArray.length; i++){
             if (url.includes(sitesArray[i])){
@@ -155,25 +156,40 @@ var timeout = null;
 
     function getMonitoredSites(){
 
-        return "facebook.com,instagram.com,youtube.com,reddit.com,google.com";
+        //return "facebook.com,instagram.com,youtube.com,reddit.com,google.com";
 
         GM.xmlHttpRequest({
             method:     "POST",
             url:        "http://localhost:8080/getsites",
-            data:       jsonData,
-            headers:    {"Content-Type": "application/json"}
-        }).then(siteArray => {
+            onload: function(response) {
 
-            var storageString = "";
+                const siteJson = JSON.stringify(response);
 
-            if (siteArray.length > 0){
-                storageString += siteArray[0]["website"];
+                console.log(siteJson);
+
+                /*
+                var storageString = "";
+
+                if (siteJson.length > 0){
+                    storageString += siteJson[0].site
+                }
+
+                for (var i = 1; i < siteJson.length; i++){
+                    storageString += "," + siteJson[i].site;
+                }
+
+                console.log("Received: " + storageString);
+
+                if (typeof storageString !== 'undefined' && storageString.localeCompare("") != 0){
+                    document.cookie = "sites=" + storageString + "; max-age=3600";
+                    console.log("Cookie as stored: " + document.cookie);
+                    sitesArray = sites.split(",");
+                    return findSite(sitesArray);
+                }
+                */
+
+                return "";
             }
-
-            for (var i = 1; i < siteArray.length; i++){
-                storageString += "," + siteArray[i]["website"];
-            }
-            return storageString;
         });
     }
 
