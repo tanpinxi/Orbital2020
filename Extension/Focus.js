@@ -51,7 +51,7 @@ var timeout = null;
 
         const site = getSite();
 
-        if (site.localeCompare("") != 0){
+        if (site.localeCompare("") != 0) {
 
             GM.getValue(site, []).then(x => {
 
@@ -92,18 +92,21 @@ var timeout = null;
     function clearCookie(){
         const site = getSite();
 
-        GM.getValue(site, []).then(x => {
-            if (x.length == 2){
-                const diff = (x[1] - x[0])/1000/60;
-                console.log(diff);
-                if (diff > 0){
-                    const date = x[1].getDate();
-                    storeUsage(site, date, diff);
-                }
-            }
-        });
+        if (site.localeCompare("") != 0) {
 
-        GM.deleteValue(site);
+            GM.getValue(site, []).then(x => {
+                if (x.length == 2){
+                    const diff = (x[1] - x[0])/1000/60;
+                    console.log(diff);
+                    if (diff > 0){
+                        const date = x[1].getDate();
+                        storeUsage(site, date, diff);
+                    }
+                }
+            });
+
+            GM.deleteValue(site);
+        }
     }
 
     function storeUsage(site, date, diff){
@@ -126,19 +129,16 @@ var timeout = null;
 
         console.log("Browser cookies: " + storedData);
 
-        if (typeof storedData !== 'undefined' && storedData.length > 0){
-            if (storedData.indexOf("sites=") != -1){
-                const section = storedData.substring(storedData.indexOf("sites="), storedData.length).split(";")[0];
-                if (section.length > 6){
-                    sitesArray = section.substring(6, section.length).split(",");
-                    return findSite(sitesArray);
-                }
+        if (storedData.indexOf("sites=") != -1){
+            const section = storedData.substring(storedData.indexOf("sites="), storedData.length).split(";")[0];
+            if (section.length > 6){
+                sitesArray = section.substring(6, section.length).split(",");
+                return findSite(sitesArray);
             }
         }
 
-        if (sitesArray.length == 0){
-            return getMonitoredSites();
-        }
+        getMonitoredSites();
+        return "";
     }
 
     function findSite(sitesArray){
@@ -158,75 +158,74 @@ var timeout = null;
 
         //return "facebook.com,instagram.com,youtube.com,reddit.com,google.com";
 
-        fetch('http://localhost:8080/getsites', {
-            method: 'POST', 
-            mode: 'cors', 
-            origin: "*",
-        }).then(response => {
+        // fetch('http://localhost:8080/getsites', {
+        //     method: 'POST', 
+        //     mode: 'cors', 
+        //     origin: "*",
+        // }).then(response => {
             
-            const siteJson = JSON.parse(response);
+        //     const siteJson = JSON.parse(response);
 
-            console.log(siteJson);
+        //     console.log(siteJson);
 
-            var storageString = "";
+        //     var storageString = "";
 
-            if (siteJson.length > 0){
-                storageString += siteJson[0].site
-            }
+        //     if (siteJson.length > 0){
+        //         storageString += siteJson[0].site
+        //     }
 
-            for (var i = 1; i < siteJson.length; i++){
-                storageString += "," + siteJson[i].site;
-            }
+        //     for (var i = 1; i < siteJson.length; i++){
+        //         storageString += "," + siteJson[i].site;
+        //     }
 
-            console.log("Received: " + storageString);
+        //     console.log("Received: " + storageString);
 
-            if (typeof storageString !== 'undefined' && storageString.localeCompare("") != 0){
-                document.cookie = "sites=" + storageString + "; max-age=3600";
-                console.log("Cookie as stored: " + document.cookie);
-                sitesArray = storageString.split(",");
-                return findSite(sitesArray);
-            }
+        //     if (typeof storageString !== 'undefined' && storageString.localeCompare("") != 0){
+        //         document.cookie = "sites=" + storageString + "; max-age=3600";
+        //         console.log("Cookie as stored: " + document.cookie);
+        //         sitesArray = storageString.split(",");
+        //         return findSite(sitesArray);
+        //     }
 
-            return "";
-        });
+        //     return "";
+        // });
 
-        /*
-        var http = new XMLHttpRequest();
-        var server = "http://localhost:8080/getsites";
-        http.open("POST", server);
-        http.send();
+        // var http = new XMLHttpRequest();
+        // var server = "http://localhost:8080/getsites";
+        // http.open("POST", server);
+        // http.send();
     
-        http.onreadystatechange = function() {
-            if (this.readyState === 4){
-                if (this.status === 200){
+        // http.onreadystatechange = function() {
+        //     if (this.readyState === 4){
+        //         if (this.status === 200){
 
-                    const siteJson = JSON.parse(this.responseText);
+        //             const siteJson = JSON.parse(this.responseText);
 
-                    console.log(siteJson);
+        //             console.log(siteJson);
 
-                    var storageString = "";
+        //             var storageString = "";
 
-                    if (siteJson.length > 0){
-                        storageString += siteJson[0].site
-                    }
+        //             if (siteJson.length > 0){
+        //                 storageString += siteJson[0].site
+        //             }
 
-                    for (var i = 1; i < siteJson.length; i++){
-                        storageString += "," + siteJson[i].site;
-                    }
+        //             for (var i = 1; i < siteJson.length; i++){
+        //                 storageString += "," + siteJson[i].site;
+        //             }
 
-                    console.log("Received: " + storageString);
+        //             console.log("Received: " + storageString);
 
-                    if (typeof storageString !== 'undefined' && storageString.localeCompare("") != 0){
-                        document.cookie = "sites=" + storageString + "; max-age=3600";
-                        console.log("Cookie as stored: " + document.cookie);
-                        sitesArray = storageString.split(",");
-                        return findSite(sitesArray);
-                    }
+        //             if (typeof storageString !== 'undefined' && storageString.localeCompare("") != 0){
+        //                 document.cookie = "sites=" + storageString + "; max-age=3600";
+        //                 console.log("Cookie as stored: " + document.cookie);
+        //                 sitesArray = storageString.split(",");
+        //                 return findSite(sitesArray);
+        //             }
 
-                    return "";
-                }
-            }
-        }
+        //             return "";
+        //         }
+        //     }
+        // }
 
         GM.xmlHttpRequest({
             method:     "POST",
@@ -252,14 +251,9 @@ var timeout = null;
                 if (typeof storageString !== 'undefined' && storageString.localeCompare("") != 0){
                     document.cookie = "sites=" + storageString + "; max-age=3600";
                     console.log("Cookie as stored: " + document.cookie);
-                    sitesArray = storageString.split(",");
-                    return findSite(sitesArray);
                 }
-
-                return "";
             }
         });
-        */
     }
 
 })();
