@@ -31,17 +31,17 @@ CREATE TABLE `usage_data` (
   PRIMARY KEY (`site`,`date`)
 );
 
-DELIMITER $$
-CREATE TRIGGER `default_date` BEFORE INSERT ON `usage_data` FOR EACH ROW
-  if ( isnull(new.date) ) then
-    set new.date = curdate();
-  end if;
-$$
-DELIMITER ;
+
 
 /* Sample data*/
-INSERT INTO `websites` (`site`) VALUES ("facebook.com");
-INSERT INTO `websites` (`site`) VALUES ("instagram.com");
-INSERT INTO `websites` (`site`) VALUES ("youtube.com");
-INSERT INTO `websites` (`site`) VALUES ("reddit.com");
-INSERT INTO `websites` (`site`) VALUES ("google.com");
+INSERT INTO `websites`(`site`) VALUES ("facebook.com");
+INSERT INTO `websites`(`site`) VALUES ("instagram.com");
+INSERT INTO `websites`(`site`) VALUES ("youtube.com");
+INSERT INTO `websites`(`site`) VALUES ("reddit.com");
+INSERT INTO `websites`(`site`) VALUES ("google.com");
+
+INSERT INTO `usage_data`(`site`, `date`, `usage`) VALUES ("facebook.com", "2008-11-11", 1);
+INSERT INTO `usage_data`(`site`, `date`, `usage`) VALUES ("instagram.com", "2008-12-11", 2);
+INSERT INTO `usage_data`(`site`, `date`, `usage`) VALUES ("youtube.com", "2008-12-11",3);
+INSERT INTO `usage_data`(`site`, `date`, `usage`) VALUES ("reddit.com", "2008-12-11", 2);
+INSERT INTO `usage_data`(`site`, `date`, `usage`) VALUES ("google.com", "2008-12-11", 2);
