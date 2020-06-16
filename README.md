@@ -47,7 +47,7 @@ Though there may be existing products that help users track their screen time in
 
 We gathered a group of our 10 friends and walked them through the installation instructions for the web application, and how to launch the webpage. We focused on making sure that out solution was easy for users to set up and use, so that they would want to keep using it. This is the main point of our product, ensuring the ease of monitoring website usage time so that users will build a sustainable habit.
 
-** Key Feedback **
+**Key Feedback**
 
 *
 
