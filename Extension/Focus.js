@@ -67,16 +67,25 @@ var timeout = null;
                     GM.setValue(site, x);
                 }
                 else if (x.length == 2){
-                    console.log("Site last check updated to " + timeNow);
 
-                    if (x[0].getDate() === timeNow.getDate()){
+                    if (new Date(x[0]).getDate() === timeNow.getDate()){
+
+                        console.log("Site last check updated to " + timeNow);
+
                         x[1] = timeNow;
                         GM.setValue(site, x);
+
+                        // for testing only
+                        clearCookie();
                     }
                     else {
+
+                        console.log("Site accessed through midnight");
+
                         var midnight = new Date(x[0]).setHours(24,0,0,0);
-                        const date = x[0].getDate();
-                        storeUsage(site, date, (midnight - x[0])/1000/60);
+                        const date = new Date(x[0]);
+                        const dateString = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+                        storeUsage(site, dateString, (midnight - new Date(x[0]))/1000/60);
                         GM.setValue(site, [timeNow]);
                     }
                 }
@@ -96,11 +105,18 @@ var timeout = null;
 
             GM.getValue(site, []).then(x => {
                 if (x.length == 2){
-                    const diff = (x[1] - x[0])/1000/60;
-                    console.log(diff);
-                    if (diff > 0){
-                        const date = x[1].getDate();
-                        storeUsage(site, date, diff);
+                    const diff = (new Date(x[1]) - new Date(x[0]))/1000/60;
+
+                    const date = new Date(x[1]);
+                    const dateString = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+                    console.log(diff + " mins used on " + dateString);
+
+                    if (diff > 1){
+                        storeUsage(site, dateString, diff);
+                    }
+                    else {
+                        //for testing only
+                        storeUsage(site, dateString, 5);
                     }
                 }
             });
@@ -111,14 +127,20 @@ var timeout = null;
 
     function storeUsage(site, date, diff){
 
-        const data = { "site":site, "date":date, "time":diff };
-        const jsonData = JSON.stringify(data);
+        const jsonString = '{"site": "' + site + '", "date": "' + date + '", "usage": ' + diff + '}';
+        console.log("Sending to DB: " + jsonString);
+        const jsonData = JSON.parse(jsonString);
 
         GM.xmlHttpRequest({
-            method:     "POST",
-            url:        "http://localhost:8080/storeusage",
-            data:       jsonData,
-            headers:    {"Content-Type": "application/json"}
+            method: "POST",
+            url: "http://localhost:8080/storeusage",
+            data: jsonString,
+            headers: {
+                "Content-Type":"application/json",
+            },
+            onload: function(response) {
+                console.log(response);
+            }
         });
     }
 
@@ -127,7 +149,7 @@ var timeout = null;
         const storedData = document.cookie;
         var sitesArray = [];
 
-        console.log("Browser cookies: " + storedData);
+        //console.log("Browser cookies: " + storedData);
 
         if (storedData.indexOf("sites=") != -1){
             const section = storedData.substring(storedData.indexOf("sites="), storedData.length).split(";")[0];
@@ -156,85 +178,16 @@ var timeout = null;
 
     function getMonitoredSites(){
 
-        //return "facebook.com,instagram.com,youtube.com,reddit.com,google.com";
-
-        // fetch('http://localhost:8080/getsites', {
-        //     method: 'POST', 
-        //     mode: 'cors', 
-        //     origin: "*",
-        // }).then(response => {
-            
-        //     const siteJson = JSON.parse(response);
-
-        //     console.log(siteJson);
-
-        //     var storageString = "";
-
-        //     if (siteJson.length > 0){
-        //         storageString += siteJson[0].site
-        //     }
-
-        //     for (var i = 1; i < siteJson.length; i++){
-        //         storageString += "," + siteJson[i].site;
-        //     }
-
-        //     console.log("Received: " + storageString);
-
-        //     if (typeof storageString !== 'undefined' && storageString.localeCompare("") != 0){
-        //         document.cookie = "sites=" + storageString + "; max-age=3600";
-        //         console.log("Cookie as stored: " + document.cookie);
-        //         sitesArray = storageString.split(",");
-        //         return findSite(sitesArray);
-        //     }
-
-        //     return "";
-        // });
-
-        // var http = new XMLHttpRequest();
-        // var server = "http://localhost:8080/getsites";
-        // http.open("POST", server);
-        // http.send();
-    
-        // http.onreadystatechange = function() {
-        //     if (this.readyState === 4){
-        //         if (this.status === 200){
-
-        //             const siteJson = JSON.parse(this.responseText);
-
-        //             console.log(siteJson);
-
-        //             var storageString = "";
-
-        //             if (siteJson.length > 0){
-        //                 storageString += siteJson[0].site
-        //             }
-
-        //             for (var i = 1; i < siteJson.length; i++){
-        //                 storageString += "," + siteJson[i].site;
-        //             }
-
-        //             console.log("Received: " + storageString);
-
-        //             if (typeof storageString !== 'undefined' && storageString.localeCompare("") != 0){
-        //                 document.cookie = "sites=" + storageString + "; max-age=3600";
-        //                 console.log("Cookie as stored: " + document.cookie);
-        //                 sitesArray = storageString.split(",");
-        //                 return findSite(sitesArray);
-        //             }
-
-        //             return "";
-        //         }
-        //     }
-        // }
-
         GM.xmlHttpRequest({
-            method:     "POST",
-            url:        "http://localhost:8080/getsites",
+            method: "POST",
+            url: "http://localhost:8080/getsites",
+            headers: {
+                "Content-type":"application/x-www-form-urlencoded",
+            },
             onload: function(response) {
 
-                const siteJson = JSON.stringify(response);
-
-                console.log(siteJson);
+                const siteJson = JSON.parse(response.responseText);
+                //console.log(siteJson);
 
                 var storageString = "";
 
@@ -246,11 +199,9 @@ var timeout = null;
                     storageString += "," + siteJson[i].site;
                 }
 
-                console.log("Received: " + storageString);
-
                 if (typeof storageString !== 'undefined' && storageString.localeCompare("") != 0){
                     document.cookie = "sites=" + storageString + "; max-age=3600";
-                    console.log("Cookie as stored: " + document.cookie);
+                    //console.log("Cookie as stored: " + document.cookie);
                 }
             }
         });
