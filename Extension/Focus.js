@@ -74,9 +74,6 @@ var timeout = null;
 
                         x[1] = timeNow;
                         GM.setValue(site, x);
-
-                        // for testing only
-                        clearCookie();
                     }
                     else {
 
@@ -114,9 +111,8 @@ var timeout = null;
                     if (diff > 1){
                         storeUsage(site, dateString, diff);
                     }
-                    else {
-                        //for testing only
-                        storeUsage(site, dateString, 5);
+                    else{
+                        storeUsage(site, dateString, 1);
                     }
                 }
             });

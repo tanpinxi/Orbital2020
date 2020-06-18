@@ -37,10 +37,10 @@ app.post('/storeusage', (req, res) => {
     
     console.log("Received storeusage request with site = " + req.body.site + ", usage = " + req.body.usage + ", date = " + req.body.date);
 
-    connection.query('SELECT * FROM usage_data WHERE site = "' + req.body.site + '" AND date = ' + req.body.date, function (err, output, fields) {
+    connection.query('SELECT * FROM usage_data WHERE site = "' + req.body.site + '" AND date = "' + req.body.date + '"', function (err, output, fields) {
         console.log(output);
         if (output.length > 0){
-            connection.query('UPDATE usage_data SET usage = usage + ' + req.body.usage + ' WHERE site = "' + req.body.site + '" AND date = "'+ req.body.date + '"', function (err, rows, fields) {
+            connection.query('UPDATE usage_data SET `usage` = `usage` + ' + req.body.usage + ' WHERE site = "' + req.body.site + '" AND date = "'+ req.body.date + '"', function (err, rows, fields) {
                 if (err) throw err
                 res.send(true);
             })
