@@ -30,10 +30,16 @@ We are using an open-source modular framework, Cube.js, to build the main analyt
 
 ### Feature Breakdown 
 
-*  
+* Extension 
+
+Helps to keep track of the usage time for each website.
+
+* Custom website selection 
+
+Allows users to select the sites that they'd like to flag. 
 
 * Interactive Analytics Dashboard 
-  * X
+  * 
 
 
 ### Why this product satisfies User Needs:
