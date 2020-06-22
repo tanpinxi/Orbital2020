@@ -6,6 +6,14 @@ cube(`UsageData`, {
   },
   
   measures: {
+    usage: {
+      sql: `usage`,
+      type: `number`
+    },
+    totalusage: {
+      sql: `sum(${CUBE}.usage)`,
+      type: `number`
+    },
     count: {
       type: `count`,
       drillMembers: [date]
