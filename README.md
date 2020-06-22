@@ -65,7 +65,9 @@ If you'd like to test the web application on your own device, please follow thes
 
 * Implementing a time restriction 
 
-Since our target audience for the application are people who would like to limit their usage on certain flagged sites, we would like to take it further by prompting the user to reduce their usage if their screen time or time on a certain website reaches a certain level. 
+Since our target audience for the application are people who would like to limit their usage on certain flagged sites, we would like to take it further by prompting the user to reduce their usage if their screen time or time on a certain website reaches a certain level. This can possibly be in the form of a reminder.
+
+* 
 
 ### Link to Log
 
