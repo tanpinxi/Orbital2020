@@ -73,7 +73,8 @@ If you'd like to test the web application on your own device, please follow thes
 
 Since our target audience for the application are people who would like to limit their usage on certain flagged sites, we would like to take it further by prompting the user to reduce their usage if their screen time or time on a certain website reaches a certain level. This can possibly be in the form of a reminder.
 
-* 
+* Implement data restriction
+Do data pre-processing to make sure that no website usage timings from more than a week ago are in the dashboard or else it would be too bloated.
 
 ### Link to Log
 
