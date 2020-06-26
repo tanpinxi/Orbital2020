@@ -74,12 +74,16 @@ Personally, we found the dashboard easy to read and navigate. However, after usi
 If you'd like to test the web application on your own device, please follow these installation instructions: 
 
 1. Clone this repository into a folder of your choice 
+
 ```git clone this_repo```
+
 2. Install node, npm and mySQL
-``` brew install node```
-``` npm install -g cubejs-cli```
-``` brew install mySQL```
+
+* ``` brew install node```
+* ``` npm install -g cubejs-cli```
+* ``` brew install mySQL```
 3. Go to project directory and run this
+
 ```npm run dev```
 
 ### Features for the Next Phase 
