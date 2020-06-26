@@ -1,3 +1,4 @@
+# Focus 
 ## Git repo for Orbital 2020
 ##### Level: Gemini
 ###### By Tan Pinxi & Amelia Yamato
@@ -12,7 +13,7 @@ Instead of a manual recording process that may be inaccurate, we decided to debe
 We will also have a user-facing control panel to view usage statistics, ensuring that it is simple to use.
 
 ### User Stories: 
-Gaby has a problem focusing on work when she uses her computer as she often ends up going down the Youtube rabbit hole, neglecting her assignments. She realises that she has this issue of self-discipline, but isn't sure where to start. For a first step, she decides to keep track of the time she spends on Youtube and how much she toggles back and forth between the site and her assignments. She also realises that she uses Facebook when procrastinating. Hence, she finds Focus, which is a simple browser plugin that tracks the amount of time she spends on websites flagged by her. She selects Youtube and Facebook as her "flagged" websites, and at the end of each day, she goes to the analytics dashboard to get a sense of how much time she spends on each website. After seeing that she spends a whopping 4 hours on Youtube and 3 hours on Facebook instead of studying, she decides to make a conscious effort to decrease her usage. Hence, the analytics dashboard has visually displayed the amount of time she has spent on random websites when she could have been focusing on her work. 
+Gaby has a problem focusing on work when she uses her computer and realises that she has this issue of self-discipline. For a first step, she decides to keep track of the time she spends on various websites. Hence, she finds Focus and selects Youtube and Facebook as her "flagged" websites, and at the end of each day, she goes to the analytics dashboard to get a sense of how much time she spends on each website. After seeing that she spends a whopping 4 hours on Youtube, she decides to make a conscious effort to decrease her usage. 
 
 ### Execution: 
 
@@ -86,14 +87,20 @@ If you'd like to test the web application on your own device, please follow thes
 
 ```npm run dev```
 
-### Features for the Next Phase 
+### Possible Features for the Next Phase 
 
-* Implementing a time restriction 
+* Reminder when the user is reaching the time limit
 
 Since our target audience for the application are people who would like to limit their usage on certain flagged sites, we would like to take it further by prompting the user to reduce their usage if their screen time or time on a certain website reaches a certain level. This can possibly be in the form of a reminder.
 
 * Implement data restriction
+
 Do data pre-processing to make sure that no website usage timings from more than a week ago are in the dashboard or else it would be too bloated.
+
+ 
+* Blocking those specific websites once the user has exceeded a certain number of hours on it
+
+
 
 ### Link to Log
 
