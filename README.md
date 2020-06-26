@@ -5,10 +5,10 @@
 ### Problem: 
 Currently, many teenagers and young adults are highly distracted by social media and entertainment websites when working on their computers. With study and work commitments, it is important for one to manage their time well, and the best way to start is by being conscious of how they're spending their time online.
 
-Currently, there is no available website or software to help users see how much time is wasted on social media or other websites, let alone an analytics dashboard that summarises everything concisely. Therefore,self-imposed goals are hard to reinforce. Moreover, the current solutions are too manual, such as asking users to self-record, which may be unsustainable in the long-term for users who need it most. 
+Currently, there is no available website or software to help users see how much time is wasted on social media or other websites, let alone an analytics dashboard that summarises everything concisely. Therefore, self-imposed goals are hard to reinforce. Moreover, the current solutions are too manual, such as asking users to self-record, which may be unsustainable in the long-term for users who need it most. 
 
 ### Solution:
-Instead of a manual recording process that may be inaccurate, we decided to debelop a fully automated, background process to monitor website usage. This means that there is no additional work for users - just download, setup, and let it work in the background. The plugin is passive and non-invasive, only monitoring pre-approved website.
+Instead of a manual recording process that may be inaccurate, we decided to debelop a fully automated, background process to monitor website usage. This means that there is no additional work for users - just download, setup, and let it work in the background. The plugin is passive and non-invasive, only monitoring pre-approved websites.
 We will also have a user-facing control panel to view usage statistics, ensuring that it is simple to use.
 
 ### User Stories: 
@@ -16,8 +16,8 @@ Gaby has a problem focusing on work when she uses her computer as she often ends
 
 ### Execution: 
 
-#### Product Demo
-
+#### Functional Prototype (Product Demo)
+[Link to demo](https://www.youtube.com/watch?v=F7EjS8sNSek)
 
 #### Database
 Contains files to setup MySQL database, which is currently hosted on localhost. RequestHandler provides API for the extension and dashboard to access the database via XMLHttpRequests.
@@ -32,17 +32,19 @@ We are using an open-source modular framework, Cube.js, to build the main analyt
 
 * Extension 
 
-Helps to keep track of the usage time for each website.
+Helps to keep track of the usage time for each website. This data is then stored in a mySQL database used for the dashboard's backend.
 
 * Custom website selection 
 
-Allows users to select the sites that they'd like to flag. 
+Allows users to input the sites that they'd like to flag. This allows any website to be added to a "watch list", instead of just social media sites.
 
 * Interactive Analytics Dashboard 
-  * 
+
+Allows users to see their usage time on websites, which updates when the page is refreshed.
 
 
 ### Why this product satisfies User Needs:
+
 Since the main intention of the browser plug-in is to make users more aware of their usage of certain websites and make them conscious of how they are spending their time, rather than explicitly *limiting* usage times, we believe that the interactive and user-friendly dashboard will be able to achieve this. 
 
 Though there may be existing products that help users track their screen time in-browser, they either more manual to start the tracking (Toggl app) or does not provide a usage breakdown by website. Hence, by integrating a browser plugin with an interactive web application, we are able to satisfy the needs of users. 
@@ -53,19 +55,32 @@ Though there may be existing products that help users track their screen time in
 
 We gathered a group of our 10 friends and walked them through the installation instructions for the web application, and how to launch the webpage. We focused on making sure that out solution was easy for users to set up and use, so that they would want to keep using it. This is the main point of our product, ensuring the ease of monitoring website usage time so that users will build a sustainable habit.
 
-2. Self-evaluation
-
 **Key Feedback**
 
-*
+* Dashboard was intuitive and easy to understand, with a nice user interface. 
+* Data presented on the dashboard would look better as graphs, rather than pie charts.
+ * **Initially**, we had used pie charts to show the usage time breakdown by website, but that proved to be difficult to read when some websites were used       relatively far less than the rest.
+* Usage times were accurate down to the minute
+ * Compared the timing reflected on the dashboard with a manual phone timer when the user was on a webpage.
+ 
+2. Self-evaluation
+
+Personally, we found the dashboard easy to read and navigate. However, after using it, we wanted to make it more interactive for users by allowing them to input the websites that they wanted to flag via a tab where they can insert their own websites.
+
+
 
 ### Installation Instructions: 
 
 If you'd like to test the web application on your own device, please follow these installation instructions: 
 
 1. Clone this repository into a folder of your choice 
+```git clone this_repo```
 2. Install node, npm and mySQL
-3. 
+``` brew install node```
+``` npm install -g cubejs-cli```
+``` brew install mySQL```
+3. Go to project directory and run this
+```npm run dev```
 
 ### Features for the Next Phase 
 
