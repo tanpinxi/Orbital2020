@@ -9,7 +9,7 @@ Currently, many teenagers and young adults are highly distracted by social media
 Currently, there is no available website or software to help users see how much time is wasted on social media or other websites, let alone an analytics dashboard that summarises everything concisely. Therefore, self-imposed goals are hard to reinforce. Moreover, the current solutions are too manual, such as asking users to self-record, which may be unsustainable in the long-term for users who need it most. 
 
 ### Solution:
-Instead of a manual recording process that may be inaccurate, we decided to debelop a fully automated, background process to monitor website usage. This means that there is no additional work for users - just download, setup, and let it work in the background. The plugin is passive and non-invasive, only monitoring pre-approved websites.
+Instead of a manual recording process that may be inaccurate, we decided to debelop a fully automated, background process to monitor website usage on desktop. This means that there is no additional work for users - just download, setup, and let it work in the background. The desktop browser plugin is passive and non-invasive, only monitoring pre-approved websites.
 We will also have a user-facing control panel to view usage statistics, ensuring that it is simple to use.
 
 ### User Stories: 
@@ -101,6 +101,13 @@ Do data pre-processing to make sure that no website usage timings from more than
 * Blocking those specific websites once the user has exceeded a certain number of hours on it
 
 
+### Project Schedule
+
+1 July - 6 July: Revise project and discuss possible improvements based on user testing and peer reviews.
+
+7 July - 20 July: Implement features for the next phase and conduct next round of user feedback. Features could include those previously listed and/or any recommended in the peer reviews.
+
+21 July - 28 July: Prepare materials for final milestone (video, poster and clean up repository)
 
 ### Link to Log
 
