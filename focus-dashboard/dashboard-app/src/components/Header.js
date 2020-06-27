@@ -10,11 +10,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 const Header = ({ location }) => (
   <AppBar position="static">
     <Toolbar variant="dense">
-      <IconButton edge="start" color="inherit" aria-label="menu">
-        <MenuIcon />
-      </IconButton>
-      <Typography variant="h6" color="inherit">
-        My Dashboard
+      <Typography variant="h6" color="inherit" font="">
+        FOCUS
       </Typography>
     </Toolbar>
   </AppBar>
