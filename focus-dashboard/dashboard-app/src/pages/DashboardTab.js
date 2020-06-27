@@ -69,7 +69,7 @@ const DashboardItems = [
   }
 ];
 
-const DashboardPage = () => {
+const DashboardTab = () => {
   const dashboardItem = item => (
     <Grid item xs={12} lg={6} key={item.id}>
       <DashboardItem title={item.name}>
@@ -98,4 +98,4 @@ const DashboardPage = () => {
   );
 };
 
-export default DashboardPage;
+export default DashboardTab;

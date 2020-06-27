@@ -3,13 +3,18 @@ require('dotenv').config()
 var express = require('express')
 var mysql = require('mysql')
 var bodyParser = require("body-parser");
-var qs = require('qs')
 
 const port = 8080
 
 var app = express()
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "https://localhost:3000");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 var connection = mysql.createConnection({
     host: process.env.DB_HOST,

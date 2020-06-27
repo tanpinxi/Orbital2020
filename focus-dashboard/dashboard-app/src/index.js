@@ -6,7 +6,8 @@ import App from "./App";
 import Tabs from "./components/Tabs"
 import * as serviceWorker from "./serviceWorker";
 import { HashRouter as Router, Route } from "react-router-dom";
-import DashboardPage from "./pages/DashboardPage";
+import DashboardTab from "./pages/DashboardTab";
+import SettingsTab from "./pages/SettingsTab"
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,10 +15,10 @@ ReactDOM.render(
       <App>
         <Tabs>
           <div label="Dashboard">
-            <Route key="index" exact path="/" component={DashboardPage} />
+            <Route key="index" exact path="/" component={DashboardTab} />
           </div>
           <div label="Settings">
-            Settings
+            <SettingsTab />
           </div>
         </Tabs>
       </App>
