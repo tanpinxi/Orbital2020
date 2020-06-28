@@ -7,7 +7,7 @@ import DashboardItem from "../components/DashboardItem";
 const DashboardItems = [
   {
     id: 0,
-    name: "New Chart",
+    name: "Usage Breakdown",
     vizState: {
       query: {
         measures: ["UsageData.totalusage"],
@@ -27,7 +27,7 @@ const DashboardItems = [
   },
   {
     id: 1,
-    name: "New Chart",
+    name: "Daily Usage",
     vizState: {
       query: {
         measures: ["UsageData.totalusage"],
@@ -39,27 +39,6 @@ const DashboardItems = [
         ],
         order: {
           "UsageData.date": "asc"
-        },
-        dimensions: ["UsageData.site"],
-        filters: []
-      },
-      chartType: "line"
-    }
-  },
-  {
-    id: 2,
-    name: "New Chart",
-    vizState: {
-      query: {
-        measures: ["UsageData.totalusage"],
-        timeDimensions: [
-          {
-            dimension: "UsageData.date",
-            granularity: "day"
-          }
-        ],
-        order: {
-          "UsageData.totalusage": "desc"
         },
         dimensions: ["UsageData.site"],
         filters: []
