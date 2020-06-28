@@ -2,49 +2,63 @@ import React from 'react';
 import WebsiteRow from '../components/WebsiteRow'
 
 const axios = require('axios').default;
-	
-async function getSites(){
-
-	const response = await axios.post("http://localhost:8080/getsites", 
-	{headers: {
-		"Content-type":"application/x-www-form-urlencoded"
-	}})
-	console.log(response.data)
-}
 
 class SettingsTab extends React.Component {
 	
 	constructor(props){
-		super(props);
-		this.rowInput = React.createRef();
-		this.columnInput = React.createRef();
-		this.thresholdInput = React.createRef();
+		super(props)
+		this.rowInput = React.createRef()
 		this.state = {
-			rows: 10,
-			columns: 10,
-			threshold: 4
+			sites: [],
+			boxNum: 0
 		}
 	}
+	
+	componentDidMount() {
+		this.getSites().then(res => this.setState({sites: res, boxNum: res.length}))
+	}
+
+	addRow() {
+		if (this.state.boxNum < 20) {
+			this.setState({boxNum: this.state.boxNum + 1})
+		}
+	}
+
+	async getSites(){
+
+		const response = await axios.post("http://localhost:8080/getsites", 
+		{headers: {
+			"Content-type":"application/x-www-form-urlencoded"
+		}})
+	
+		let siteArray = []
+		for (let i = 0; i < response.data.length; i++){
+			siteArray.push(response.data[i]["site"])
+		}
+
+		return siteArray
+	}
+
 
 	handleSubmit = async event => {
 		
 		event.preventDefault();
 		
-		if (this.newRow < 2 || this.newColumn < 2 || this.newThreshold > Math.min(this.newRow,this.newColumn)) {
-			alert("Please enter valid input!");
-		}
-		else {
-			
-			await this.setState({rows: this.rowInput.current.value, columns: this.columnInput.current.value, threshold: this.thresholdInput.current.value});
-		}
 	}
 	
 	renderTable() {
-		let sites = ["facebook.com", "google.com", "youtube.com"]
-		let tableRows = Array(sites.length).fill(null)
 
-		for (let i = 0; i < sites.length; i++){
-			tableRows[i] = <WebsiteRow url={sites[i]} />
+		let tableRows = Array(this.state.boxNum).fill(null)
+
+		for (let i = 0; i < this.state.boxNum; i++){
+
+			let url = ""
+
+			if (i < this.state.sites.length){
+				url = this.state.sites[i]
+			}
+
+			tableRows[i] = <WebsiteRow id={i} url={url} />
 		}
 
 		return tableRows
@@ -63,7 +77,8 @@ class SettingsTab extends React.Component {
 							{this.renderTable()}
 						</tbody>
 					</table>
-					<input type="submit" value="Submit"/>
+					<button id="addRowBtn" type="button" value="+" onClick={() => this.addRow()} />
+					<input id="updateBtn" type="submit" value="Update" />
 				</form>
 			</div>
 		);
