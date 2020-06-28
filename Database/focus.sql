@@ -28,7 +28,8 @@ CREATE TABLE `usage_data` (
   `date` date NOT NULL,
   `usage` int NOT NULL DEFAULT 0, /* could be int too, can change later*/
 
-  PRIMARY KEY (`site`,`date`)
+  PRIMARY KEY (`site`,`date`),
+  FOREIGN KEY (`site`) REFERENCES `websites` (`site`) ON DELETE CASCADE
 );
 
 

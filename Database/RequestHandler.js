@@ -38,6 +38,14 @@ app.post('/getsites', (req, res) => {
     })
 })
 
+app.post('/deletesite', (req, res) => {
+    console.log("Received deletesite request with site = " + req.body.site);
+    connection.query('DELETE site FROM websites WHERE site = "'+ req.body.site + '"', function (err, rows, fields) {
+        if (err) throw err
+        res.send(true)
+    })
+})
+
 app.post('/updatesites', (req, res) => {
     connection.query('', function (err, rows, fields) {
         if (err) throw err
