@@ -113,4 +113,8 @@ Do data pre-processing to make sure that no website usage timings from more than
 
 [Orbital Project Log](https://docs.google.com/spreadsheets/d/1SRgkBZBMHGSurudhpTh65sO5Hk9Beoih99OlxObK6D8/edit?usp=sharing)
 
+Total Hours: 
+Amelia: 112
+Pinxi: 115
+
 
