@@ -62,7 +62,7 @@ We gathered a group of our 10 friends and walked them through the installation i
 * Data presented on the dashboard would look better as graphs, rather than pie charts.
  * **Initially**, we had used pie charts to show the usage time breakdown by website, but that proved to be difficult to read when some websites were used       relatively far less than the rest.
 * Usage times were accurate down to the minute
- * Compared the timing reflected on the dashboard with a manual phone timer when the user was on a webpage.
+ * Compared the timing reflected on the dashboard with a manual phone timer when the user was on a webpage. The timings recorded with the plugin was accurate.
  
 2. Self-evaluation
 
