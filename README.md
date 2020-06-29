@@ -9,7 +9,7 @@ Currently, many teenagers and young adults are highly distracted by social media
 Currently, there is no available website or software to help users see how much time is wasted on social media or other websites, let alone an analytics dashboard that summarises everything concisely. Therefore, self-imposed goals are hard to reinforce. Moreover, the current solutions are too manual, such as asking users to self-record, which may be unsustainable in the long-term for users who need it most. 
 
 ### Solution:
-Instead of a manual recording process that may be inaccurate, we decided to debelop a fully automated, background process to monitor website usage on desktop. This means that there is no additional work for users - just download, setup, and let it work in the background. The desktop browser plugin is passive and non-invasive, only monitoring pre-approved websites.
+Instead of a manual recording process that may be inaccurate, we decided to develop a fully automated, background process to monitor website usage on desktop. This means that there is no additional work for users - just download, setup, and let it work in the background. The desktop browser plugin is passive and non-invasive, only monitoring pre-approved websites.
 We will also have a user-facing control panel to view usage statistics, ensuring that it is simple to use.
 
 ### User Stories: 
@@ -43,6 +43,10 @@ Allows users to input the sites that they'd like to flag. This allows any websit
 
 Allows users to see their usage time on websites, which updates when the page is refreshed.
 
+* Setting website usage restriction
+
+Allows users to key in the time limit they'd like to keep their usage on a certain website to.
+
 
 ### Why this product satisfies User Needs:
 
@@ -62,12 +66,11 @@ We gathered a group of our 10 friends and walked them through the installation i
 * Data presented on the dashboard would look better as graphs, rather than pie charts.
  * **Initially**, we had used pie charts to show the usage time breakdown by website, but that proved to be difficult to read when some websites were used       relatively far less than the rest.
 * Usage times were accurate down to the minute
- * Compared the timing reflected on the dashboard with a manual phone timer when the user was on a webpage. The timings recorded with the plugin was accurate.
+* Compared the timing reflected on the dashboard with a manual phone timer when the user was on a webpage. The timings recorded with the plugin was accurate.
  
 2. Self-evaluation
 
 Personally, we found the dashboard easy to read and navigate. However, after using it, we wanted to make it more interactive for users by allowing them to input the websites that they wanted to flag via a tab where they can insert their own websites.
-
 
 
 ### Installation Instructions: 
