@@ -1,5 +1,6 @@
 import React from 'react';
 import WebsiteRow from '../components/WebsiteRow'
+import "./SettingsTab.css"
 
 const axios = require('axios').default;
 
@@ -66,19 +67,19 @@ class SettingsTab extends React.Component {
 	
 	render() {
 		return (
-			<div>
+			<div id="settingsBody">
 				<form onSubmit={this.handleSubmit}>
+					<button id="addRowBtn" class="btn" type="button" onClick={() => this.addRow()}>+</button>
+					<input id="updateBtn" class="btn" type="submit" value="Update" />
 					<table>
 						<tbody>
 							<tr>
-								<th>Website</th>
-								<th>Daily Limit (mins)</th>
+								<th class="urlCol">Website</th>
+								<th class="limitCol">Daily Limit (mins)</th>
 							</tr>
 							{this.renderTable()}
 						</tbody>
 					</table>
-					<button id="addRowBtn" type="button" value="+" onClick={() => this.addRow()} />
-					<input id="updateBtn" type="submit" value="Update" />
 				</form>
 			</div>
 		);

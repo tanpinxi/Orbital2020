@@ -18,7 +18,14 @@ Gaby has a problem focusing on work when she uses her computer and realises that
 ### Execution: 
 
 #### Functional Prototype (Product Demo)
-[Link to demo](https://www.youtube.com/watch?v=F7EjS8sNSek)
+
+![dashboard](https://imgur.com/8bm2gSW.jpg)
+
+The dashboard displays the usage statistics collected from our browser extension so users can view their usage breakdowns and daily usage for each site. 
+
+![settings](https://imgur.com/td4RqRJ.jpg)
+
+Users can view the list of monitored sites on the settings page (implemented), and will also be able to add and delete sites (to be implemented).
 
 #### Database
 Contains files to setup MySQL database, which is currently hosted on localhost. RequestHandler provides API for the extension and dashboard to access the database via XMLHttpRequests.
