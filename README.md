@@ -42,10 +42,6 @@ We are using an open-source modular framework, Cube.js, to build the main analyt
 
 Helps to keep track of the usage time for each website. This data is then stored in a mySQL database used for the dashboard's backend.
 
-* Custom website selection 
-
-Allows users to input the sites that they'd like to flag. This allows any website to be added to a "watch list", instead of just social media sites.
-
 * Interactive Analytics Dashboard 
 
 Allows users to see their usage time on websites, which updates when the page is refreshed.
@@ -109,6 +105,11 @@ Do data pre-processing to make sure that no website usage timings from more than
 
  
 * Blocking those specific websites once the user has exceeded a certain number of hours on it
+
+* Custom website selection 
+
+Allows users to input the sites that they'd like to flag. This allows any website to be added to a "watch list", instead of just social media sites.
+Currently, the user can select a list of common "distracting" websites from a pre-defined list. By milestone 3, we hope to add the functionality of allowing the user to input what sites they'd like to monitor on their own.
 
 
 ### Project Schedule
