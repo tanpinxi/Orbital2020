@@ -16,8 +16,8 @@ var allowedOrigins = ['http://localhost:3000'];
 app.use(cors({
   origin: function(origin, callback){
     if(allowedOrigins.indexOf(origin) === -1){
-      var msg = 'The CORS policy for this site does not allow access from ' + origin;
-      return callback(new Error(msg), false);
+        var msg = 'The CORS policy for this site does not allow access from ' + origin
+        return callback(new Error(msg), false)
     }
     return callback(null, true);
   }
@@ -31,7 +31,7 @@ var connection = mysql.createConnection({
 })
 
 app.post('/getsites', (req, res) => {
-    console.log("Received getsites request");
+    console.log("Received getsites request")
     connection.query('SELECT site FROM websites WHERE selected', function (err, rows, fields) {
         if (err) throw err
         res.send(rows)
@@ -39,18 +39,21 @@ app.post('/getsites', (req, res) => {
 })
 
 app.post('/deletesite', (req, res) => {
-    console.log("Received deletesite request with site = " + req.body.site);
-    connection.query('DELETE site FROM websites WHERE site = "'+ req.body.site + '"', function (err, rows, fields) {
+    console.log("Received deletesite request with site = " + req.body.site)
+    connection.query('DELETE FROM websites WHERE site = "'+ req.body.site + '"', function (err, rows, fields) {
         if (err) throw err
         res.send(true)
     })
 })
 
 app.post('/updatesites', (req, res) => {
-    connection.query('', function (err, rows, fields) {
-        if (err) throw err
-        res.send(true)
-    })
+    console.log("Received updatesites request with site = " + req.body.sites)
+    for (let i = 0; i < req.body.sites.length; i++) {
+        connection.query('INSERT IGNORE INTO websites (`site`) VALUES ("' + req.body.sites[i] + '")', function (err, rows, fields) {
+            if (err) throw err
+        })
+    }
+    res.send(true)
 })
 
 app.post('/storeusage', (req, res) => {

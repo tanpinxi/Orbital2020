@@ -108,10 +108,10 @@ var timeout = null;
                     const dateString = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
                     console.log(diff + " mins used on " + dateString);
 
-                    if (diff > 1){
+                    if (diff > 1) {
                         storeUsage(site, dateString, diff);
                     }
-                    else{
+                    else {
                         storeUsage(site, dateString, 1);
                     }
                 }

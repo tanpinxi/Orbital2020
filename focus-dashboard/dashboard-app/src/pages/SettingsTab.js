@@ -1,5 +1,4 @@
 import React from 'react';
-import WebsiteRow from '../components/WebsiteRow'
 import "./SettingsTab.css"
 
 const axios = require('axios').default;
@@ -21,16 +20,21 @@ class SettingsTab extends React.Component {
 
 	addRow() {
 		if (this.state.boxNum < 20) {
-			this.setState({boxNum: this.state.boxNum + 1})
+
+			let newArray = []
+			for (let i = 0; i < this.state.boxNum; i++) {
+
+				if (i < this.state.sites.length) {
+					newArray.push(this.state.sites[i])
+				}
+			}
+			this.setState({sites: newArray, boxNum: this.state.boxNum + 1})
 		}
 	}
 
 	async getSites(){
 
-		const response = await axios.post("http://localhost:8080/getsites", 
-		{headers: {
-			"Content-type":"application/x-www-form-urlencoded"
-		}})
+		const response = await axios.post("http://localhost:8080/getsites")
 	
 		let siteArray = []
 		for (let i = 0; i < response.data.length; i++){
@@ -40,11 +44,72 @@ class SettingsTab extends React.Component {
 		return siteArray
 	}
 
+	async deleteSite(site){
 
-	handleSubmit = async event => {
-		
-		event.preventDefault();
-		
+		if (site.trim().localeCompare("") != 0){
+
+			axios.post("http://localhost:8080/deletesite", 
+				{
+					site: site
+				})
+		}
+	}
+
+	async updateSitesDB(sites){
+		axios.post("http://localhost:8080/updatesites", 
+			{
+				sites: sites
+			})
+	}
+
+	updateSitesLocal(index, url){
+
+		console.log("Updating row " + index + " to " + url)
+
+		let newArray = []
+		for (let i = 0; i < this.state.sites.length; i++) {
+			if (i != index && this.state.sites[i].trim().localeCompare("") != 0) {
+				console.log("Keeping " + this.state.sites[i])
+				newArray.push(this.state.sites[i])
+			}
+		}
+
+		newArray.push(url)
+		this.updateSitesDB(newArray)
+
+		this.setState({sites: newArray, boxNum: this.state.boxNum})
+	}
+
+	deleteRow(index){
+
+		console.log("Deleting row " + index)
+
+		let newArray = []
+		for (let i = 0; i < this.state.sites.length; i++) {
+			if (i != index) {
+				console.log("Keeping " + this.state.sites[i])
+				newArray.push(this.state.sites[i])
+			}
+			else {
+				this.deleteSite(this.state.sites[i])
+			}
+		}
+		this.setState({sites: newArray, boxNum: this.state.boxNum - 1})
+	}
+
+	renderRow(index, url){
+		return (
+			<tr id={"row" + index} class="websiteRow">
+				<td id={"urlCol" + index} class="urlCol">
+					<input id={index} class="urlInput" key={index} type="text" name="rows" defaultValue={url} onBlur={(e) => this.updateSitesLocal(e.target.id, e.target.value)}/>
+				</td>
+				<td id={"limitCol" + index} class="limitCol">
+					<input id={"limitInput" + index} class="limitInput" type="number" name="rows" defaultValue="0" />
+				</td>
+				<td class="delBtnCol">
+					<input id={index} key={index} class="delBtn" type="button" value="-" onClick={(e) => this.deleteRow(e.target.id)} />
+				</td>
+			</tr>)
 	}
 	
 	renderTable() {
@@ -55,11 +120,11 @@ class SettingsTab extends React.Component {
 
 			let url = ""
 
-			if (i < this.state.sites.length){
+			if (i < this.state.sites.length) {
 				url = this.state.sites[i]
 			}
 
-			tableRows[i] = <WebsiteRow id={i} url={url} />
+			tableRows[i] = this.renderRow(i, url)
 		}
 
 		return tableRows
@@ -68,19 +133,18 @@ class SettingsTab extends React.Component {
 	render() {
 		return (
 			<div id="settingsBody">
-				<form onSubmit={this.handleSubmit}>
-					<button id="addRowBtn" class="btn" type="button" onClick={() => this.addRow()}>+</button>
-					<input id="updateBtn" class="btn" type="submit" value="Update" />
-					<table>
-						<tbody>
-							<tr>
-								<th class="urlCol">Website</th>
-								<th class="limitCol">Daily Limit (mins)</th>
-							</tr>
-							{this.renderTable()}
-						</tbody>
-					</table>
-				</form>
+				<input id="addRowBtn" class="btn" type="button" value="+" onClick={() => this.addRow()} />
+				<input id="updateBtn" class="btn" type="submit" value="Update" />
+				<table>
+					<tbody>
+						<tr>
+							<th class="urlCol">Website</th>
+							<th class="limitCol">Daily Limit (mins)</th>
+							<th class="delBtnCol" />
+						</tr>
+						{this.renderTable()}
+					</tbody>
+				</table>
 			</div>
 		);
 	}

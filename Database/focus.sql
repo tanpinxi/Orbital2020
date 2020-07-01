@@ -18,7 +18,8 @@ DROP TABLE IF EXISTS `usage_data`;
 
 CREATE TABLE `websites` (
   `site` varchar(255) NOT NULL,
-  `selected` boolean NOT NULL DEFAULT TRUE, /* if the website is selected, we tally it in the dashboard */
+  `limit` int NOT NULL DEFAULT 0,
+  `selected` boolean NOT NULL DEFAULT TRUE,
   
   PRIMARY KEY (`site`)
 );
@@ -26,7 +27,7 @@ CREATE TABLE `websites` (
 CREATE TABLE `usage_data` (
   `site` varchar(255) NOT NULL,
   `date` date NOT NULL,
-  `usage` int NOT NULL DEFAULT 0, /* could be int too, can change later*/
+  `usage` int NOT NULL DEFAULT 0,
 
   PRIMARY KEY (`site`,`date`),
   FOREIGN KEY (`site`) REFERENCES `websites` (`site`) ON DELETE CASCADE
