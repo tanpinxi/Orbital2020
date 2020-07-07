@@ -36,11 +36,11 @@ CREATE TABLE `usage_data` (
 
 
 /* Sample data*/
-INSERT INTO `websites`(`site`) VALUES ("facebook.com");
-INSERT INTO `websites`(`site`) VALUES ("instagram.com");
-INSERT INTO `websites`(`site`) VALUES ("youtube.com");
-INSERT INTO `websites`(`site`) VALUES ("reddit.com");
-INSERT INTO `websites`(`site`) VALUES ("google.com");
+INSERT INTO `websites`(`site`, `limit`) VALUES ("facebook.com", 30);
+INSERT INTO `websites`(`site`, `limit`) VALUES ("instagram.com", 60);
+INSERT INTO `websites`(`site`, `limit`) VALUES ("youtube.com", 120);
+INSERT INTO `websites`(`site`, `limit`) VALUES ("reddit.com", 30);
+INSERT INTO `websites`(`site`, `limit`) VALUES ("google.com", 60);
 
 INSERT INTO `usage_data`(`site`, `date`, `usage`) VALUES ("facebook.com", "2020-06-13", 10);
 INSERT INTO `usage_data`(`site`, `date`, `usage`) VALUES ("facebook.com", "2020-06-17", 11);

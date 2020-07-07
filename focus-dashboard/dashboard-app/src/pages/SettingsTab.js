@@ -10,38 +10,41 @@ class SettingsTab extends React.Component {
 		this.rowInput = React.createRef()
 		this.state = {
 			sites: [],
+			limits: [],
 			boxNum: 0
 		}
 	}
 	
 	componentDidMount() {
-		this.getSites().then(res => this.setState({sites: res, boxNum: res.length}))
+		this.getSites().then(res => {
+			console.log(res)
+			let siteArray = [], limitArray = [];
+			for (let i = 0; i < res.length; i++) {
+				siteArray.push(res[i]["site"])
+				limitArray.push(res[i]["limit"])
+			}
+			this.setState({sites: siteArray, limits: limitArray, boxNum: res.length})
+		})
 	}
 
 	addRow() {
 		if (this.state.boxNum < 20) {
 
-			let newArray = []
+			let newSites = [], newLimits = []
 			for (let i = 0; i < this.state.boxNum; i++) {
 
 				if (i < this.state.sites.length) {
-					newArray.push(this.state.sites[i])
+					newSites.push(this.state.sites[i])
+					newLimits.push(this.state.limits[i])
 				}
 			}
-			this.setState({sites: newArray, boxNum: this.state.boxNum + 1})
+			this.setState({sites: newSites, limits: newLimits, boxNum: this.state.boxNum + 1})
 		}
 	}
 
 	async getSites(){
-
 		const response = await axios.post("http://localhost:8080/getsites")
-	
-		let siteArray = []
-		for (let i = 0; i < response.data.length; i++){
-			siteArray.push(response.data[i]["site"])
-		}
-
-		return siteArray
+		return response.data
 	}
 
 	async deleteSite(site){
@@ -55,10 +58,11 @@ class SettingsTab extends React.Component {
 		}
 	}
 
-	async updateSitesDB(sites){
+	async updateSitesDB(sites, limits){
 		axios.post("http://localhost:8080/updatesites", 
 			{
-				sites: sites
+				sites: sites,
+				limits: limits
 			})
 	}
 
@@ -66,45 +70,89 @@ class SettingsTab extends React.Component {
 
 		console.log("Updating row " + index + " to " + url)
 
-		let newArray = []
-		for (let i = 0; i < this.state.sites.length; i++) {
-			if (i != index && this.state.sites[i].trim().localeCompare("") != 0) {
-				console.log("Keeping " + this.state.sites[i])
-				newArray.push(this.state.sites[i])
+		let newSites = []
+		if (index < this.state.sites.length) {
+			for (let i = 0; i < this.state.sites.length; i++) {
+
+				if (i != index) {
+					newSites.push(this.state.sites[i])
+				}
+				else if (url.trim().localeCompare("") != 0) {
+					this.deleteSite(this.state.sites[i])
+					newSites.push(url.trim())
+				}
+			}
+
+			this.updateSitesDB(newSites, this.state.limits)
+			this.setState({sites: newSites})
+		}
+		else {
+			for (let i = 0; i < this.state.sites.length; i++) {
+				newSites.push(this.state.sites[i])
+			}
+
+			let newLimits = []
+			for (let i = 0; i < this.state.limits.length; i++) {
+				if (i < this.state.limits.length) {
+					newLimits.push(this.state.limits[i])
+				}
+			}
+
+			if (url.trim().localeCompare("") != 0) {
+				newSites.push(url.trim())
+				newLimits.push(0)
+			}
+
+			this.updateSitesDB(newSites, newLimits)
+			this.setState({sites: newSites, limits: newLimits})
+		}
+	}
+
+	updateLimitsLocal(index, limit){
+
+		console.log("Updating row " + index + " to " + limit + "mins")
+
+		let newLimits = []
+		for (let i = 0; i < this.state.limits.length; i++) {
+			if (i != index) {
+				newLimits.push(this.state.limits[i])
+			}
+			else {
+				newLimits.push(Math.max(limit, 0))
 			}
 		}
 
-		newArray.push(url)
-		this.updateSitesDB(newArray)
+		this.updateSitesDB(this.state.sites, newLimits)
 
-		this.setState({sites: newArray, boxNum: this.state.boxNum})
+		this.setState({limits: newLimits})
 	}
 
 	deleteRow(index){
 
 		console.log("Deleting row " + index)
 
-		let newArray = []
+		let newSites = [], newLimits = []
 		for (let i = 0; i < this.state.sites.length; i++) {
 			if (i != index) {
-				console.log("Keeping " + this.state.sites[i])
-				newArray.push(this.state.sites[i])
+				newSites.push(this.state.sites[i])
+				newLimits.push(this.state.limits[i])
 			}
 			else {
 				this.deleteSite(this.state.sites[i])
 			}
 		}
-		this.setState({sites: newArray, boxNum: this.state.boxNum - 1})
+		console.log(newSites)
+		this.setState({sites: newSites, limits: newLimits, boxNum: this.state.boxNum - 1})
 	}
 
-	renderRow(index, url){
+	renderRow(index, url, limit){
 		return (
 			<tr id={"row" + index} class="websiteRow">
 				<td id={"urlCol" + index} class="urlCol">
 					<input id={index} class="urlInput" key={index} type="text" name="rows" defaultValue={url} onBlur={(e) => this.updateSitesLocal(e.target.id, e.target.value)}/>
 				</td>
 				<td id={"limitCol" + index} class="limitCol">
-					<input id={"limitInput" + index} class="limitInput" type="number" name="rows" defaultValue="0" />
+					<input id={index} class="limitInput" type="number" name="rows" defaultValue={limit} onBlur={(e) => this.updateLimitsLocal(e.target.id, e.target.value)} />
 				</td>
 				<td class="delBtnCol">
 					<input id={index} key={index} class="delBtn" type="button" value="-" onClick={(e) => this.deleteRow(e.target.id)} />
@@ -118,13 +166,13 @@ class SettingsTab extends React.Component {
 
 		for (let i = 0; i < this.state.boxNum; i++){
 
-			let url = ""
+			let url = "", limit = 0
 
 			if (i < this.state.sites.length) {
 				url = this.state.sites[i]
+				limit = this.state.limits[i]
 			}
-
-			tableRows[i] = this.renderRow(i, url)
+			tableRows[i] = this.renderRow(i, url, limit)
 		}
 
 		return tableRows

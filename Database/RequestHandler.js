@@ -32,7 +32,7 @@ var connection = mysql.createConnection({
 
 app.post('/getsites', (req, res) => {
     console.log("Received getsites request")
-    connection.query('SELECT site FROM websites WHERE selected', function (err, rows, fields) {
+    connection.query('SELECT `site`, `limit` FROM websites WHERE selected', function (err, rows, fields) {
         if (err) throw err
         res.send(rows)
     })
@@ -47,9 +47,9 @@ app.post('/deletesite', (req, res) => {
 })
 
 app.post('/updatesites', (req, res) => {
-    console.log("Received updatesites request with site = " + req.body.sites)
+    console.log("Received updatesites request with site = " + req.body.sites + " and limits = " + req.body.limits)
     for (let i = 0; i < req.body.sites.length; i++) {
-        connection.query('INSERT IGNORE INTO websites (`site`) VALUES ("' + req.body.sites[i] + '")', function (err, rows, fields) {
+        connection.query('INSERT INTO websites (`site`, `limit`) VALUES ("' + req.body.sites[i] + '", ' + req.body.limits[i] + ') ON DUPLICATE KEY UPDATE `limit` = ' + req.body.limits[i], function (err, rows, fields) {
             if (err) throw err
         })
     }
