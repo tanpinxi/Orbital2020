@@ -145,14 +145,29 @@ class SettingsTab extends React.Component {
 		this.setState({sites: newSites, limits: newLimits, boxNum: this.state.boxNum - 1})
 	}
 
-	renderRow(index, url, limit){
+	renderRow(index){
 		return (
 			<tr id={"row" + index} class="websiteRow">
 				<td id={"urlCol" + index} class="urlCol">
-					<input id={index} class="urlInput" key={index} type="text" name="rows" defaultValue={url} onBlur={(e) => this.updateSitesLocal(e.target.id, e.target.value)}/>
+					<input id={index} class="urlInput" key={index} type="text" name="rows" value={this.state.sites[index]} onChange={(e) => this.updateSitesLocal(e.target.id, e.target.value)}/>
 				</td>
 				<td id={"limitCol" + index} class="limitCol">
-					<input id={index} class="limitInput" type="number" name="rows" defaultValue={limit} onBlur={(e) => this.updateLimitsLocal(e.target.id, e.target.value)} />
+					<input id={index} class="limitInput" type="number" name="rows" value={this.state.limits[index]} onChange={(e) => this.updateLimitsLocal(e.target.id, e.target.value)} />
+				</td>
+				<td class="delBtnCol">
+					<input id={index} key={index} class="delBtn" type="button" value="-" onClick={(e) => this.deleteRow(e.target.id)} />
+				</td>
+			</tr>)
+	}
+
+	renderEmptyRow(index){
+		return (
+			<tr id={"row" + index} class="websiteRow">
+				<td id={"urlCol" + index} class="urlCol">
+					<input id={index} class="urlInput" key={index} type="text" name="rows" onChange={(e) => this.updateSitesLocal(e.target.id, e.target.value)}/>
+				</td>
+				<td id={"limitCol" + index} class="limitCol">
+					<input id={index} class="limitInput" type="number" name="rows" value="0" onChange={(e) => this.updateLimitsLocal(e.target.id, e.target.value)} />
 				</td>
 				<td class="delBtnCol">
 					<input id={index} key={index} class="delBtn" type="button" value="-" onClick={(e) => this.deleteRow(e.target.id)} />
@@ -166,13 +181,12 @@ class SettingsTab extends React.Component {
 
 		for (let i = 0; i < this.state.boxNum; i++){
 
-			let url = "", limit = 0
-
 			if (i < this.state.sites.length) {
-				url = this.state.sites[i]
-				limit = this.state.limits[i]
+				tableRows[i] = this.renderRow(i)
 			}
-			tableRows[i] = this.renderRow(i, url, limit)
+			else {
+				tableRows[i] = this.renderEmptyRow(i)
+			}
 		}
 
 		return tableRows
@@ -182,7 +196,6 @@ class SettingsTab extends React.Component {
 		return (
 			<div id="settingsBody">
 				<input id="addRowBtn" class="btn" type="button" value="+" onClick={() => this.addRow()} />
-				<input id="updateBtn" class="btn" type="submit" value="Update" />
 				<table>
 					<tbody>
 						<tr>
