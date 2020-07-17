@@ -10,16 +10,26 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 const COLORS_SERIES = [
-  "#7A77FF",
-  "#141446",
-  "#FF6492",
-  "#727290",
-  "#43436B",
-  "#BEF3BE",
-  "#68B68C",
-  "#FFE7AA",
-  "#B2A58D",
-  "#64C8E0"
+  "#08B2E3",
+  "#F39237",
+  "#57A773",
+  "#D63230",
+  "#340068",
+  "#5EFC8D",
+  "#8377D1",
+  "#FFC482",
+  "#496A81",
+  "#B3AF8F",
+  "#FFD166",
+  "#06D6A0",
+  "#60492C",
+  "#096B72",
+  "#7F675B",
+  "#A30B37",
+  "#CEC3C1",
+  "#410B13",
+  "#FAA275",
+  "#F1D302"
 ];
 const CHART_HEIGHT = 300;
 
