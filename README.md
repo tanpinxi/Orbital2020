@@ -80,18 +80,33 @@ Personally, we found the dashboard easy to read and navigate. However, after usi
 
 If you'd like to test the web application on your own device, please follow these installation instructions: 
 
-1. Clone this repository into a folder of your choice 
+1. Clone this repository
 
-```git clone this_repo```
+`git clone https://github.com/FizzyAgent/Orbital2020.git`
 
-2. Install node, npm and mySQL
+1. Install node, npm and mySQL
 
-* ``` brew install node```
-* ``` npm install -g cubejs-cli```
-* ``` brew install mySQL```
-3. Go to project directory and run this
+`brew install node`
+`npm install -g cubejs-cli`
+`brew install mySQL`
 
-```npm run dev```
+1. Under Database folder
+    1. Run focus.sql to setup the MySQL database
+    1. Create a .env file with the following information:
+    `DB_HOST=localhost`
+    `DB_USER=<username>`
+    `DB_PASS=<password>`
+
+1. Run the following command in the project and focus-dashboard folder
+`npm install`
+
+1. Install the TamperMonkey chrome extension from [here](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) and deploy the Focus.js script
+
+1. Go to the focus-dashboard directory and run Cube-js
+`npm run dev`
+
+1. Go to the focus-dashboard\dashboard-app directory and run the react-app
+`npm start`
 
 ### Possible Features for the Next Phase 
 
