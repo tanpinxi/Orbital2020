@@ -86,16 +86,20 @@ If you'd like to test the web application on your own device, please follow thes
 
 1. Install node, npm and mySQL
 
-`brew install node`
-`npm install -g cubejs-cli`
-`brew install mySQL`
+```
+brew install node
+npm install -g cubejs-cli
+brew install mySQL
+```
 
 1. Under Database folder
     1. Run focus.sql to setup the MySQL database
     1. Create a .env file with the following information:
-    `DB_HOST=localhost`
-    `DB_USER=<username>`
-    `DB_PASS=<password>`
+```
+DB_HOST=localhost
+DB_USER=<username>
+DB_PASS=<password>
+```
 
 1. Run the following command in the project and focus-dashboard folder
 `npm install`
