@@ -181,10 +181,8 @@ var timeout = null;
                 "Content-type":"application/x-www-form-urlencoded",
             },
             onload: function(response) {
-
+                
                 const siteJson = JSON.parse(response.responseText);
-                //console.log(siteJson);
-
                 var storageString = "";
 
                 if (siteJson.length > 0){
