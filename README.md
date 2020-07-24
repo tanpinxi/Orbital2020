@@ -101,17 +101,21 @@ DB_USER=<username>
 DB_PASS=<password>
 ```
 
-4. Run the following command in the project and focus-dashboard folder
+4. Run the following command in the project and focus-dashboard directories
 
 ```npm install```
 
 5. Install the TamperMonkey chrome extension from [here](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) and deploy the Focus.js script found under Extension
 
-6. Go to the focus-dashboard directory and run Cube-js
+6. Go to the Database directory and run the Express server
+
+```node RequestHandler.js```
+
+7. Go to the focus-dashboard directory and run Cube-js
 
 ```npm run dev```
 
-7. Go to the focus-dashboard\dashboard-app directory and run the react-app
+8. Go to the focus-dashboard\dashboard-app directory and run the react-app
 
 ```npm start```
 
