@@ -21,7 +21,7 @@ Gaby has a problem focusing on work when she uses her computer and realises that
 #### Functional Prototype (Product Demo)
 
 #### Product Demo 
-![Link to product demo](https://youtu.be/J1Ob3R9aZXE)
+[Link to product demo](https://youtu.be/J1Ob3R9aZXE)
 
 #### Screenshots of Application 
 
