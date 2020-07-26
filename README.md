@@ -15,9 +15,15 @@ We will also have a user-facing control panel to view usage statistics, ensuring
 ### User Stories: 
 Gaby has a problem focusing on work when she uses her computer and realises that she has this issue of self-discipline. For a first step, she decides to keep track of the time she spends on various websites. Hence, she finds Focus and selects Youtube and Facebook as her "flagged" websites, and at the end of each day, she goes to the analytics dashboard to get a sense of how much time she spends on each website. After seeing that she spends a whopping 4 hours on Youtube, she decides to make a conscious effort to decrease her usage. 
 
+
 ### Execution: 
 
 #### Functional Prototype (Product Demo)
+
+#### Product Demo 
+![Link to product demo](https://youtu.be/J1Ob3R9aZXE)
+
+#### Screenshots of Application 
 
 ![dashboard](https://imgur.com/8bm2gSW.jpg)
 
@@ -25,7 +31,7 @@ The dashboard displays the usage statistics collected from our browser extension
 
 ![settings](https://imgur.com/td4RqRJ.jpg)
 
-Users can view the list of monitored sites on the settings page (implemented), and will also be able to add and delete sites (to be implemented).
+Users can view the list of monitored sites on the settings page (implemented), and will also be able to add and delete sites (implemented).
 
 #### Database
 Contains files to setup MySQL database, which is currently hosted on localhost. RequestHandler provides API for the extension and dashboard to access the database via XMLHttpRequests.
@@ -35,6 +41,10 @@ The browser extension is hosted on TamperMonkey and uses both standard HTML/java
 
 #### Interactive Dashboard (User Interface)
 We are using an open-source modular framework, Cube.js, to build the main analytics dashboard / control panel for the users. Cube.js is run back-end as a service, managing the connection to a mySQL database and pre-aggregation, query-queueing and more. Cube.js also exposes an API for our front-end application, allowing us to build customised dashboards and other analytics features. Using ReactJS, we are able to customise the user interface of the analytics dashboard.
+
+### Internal Use
+
+Github for version control and collaboration. 
 
 ### Feature Breakdown 
 
