@@ -59,7 +59,7 @@ Though there may be existing products that help users track their screen time in
 
 ### How we evaluated our solution:
 
-1. User focus group / interview 
+1. User focus group / interview + Usability testing 
 
 We gathered a group of our 10 friends and walked them through the installation instructions for the web application, and how to launch the webpage. We focused on making sure that out solution was easy for users to set up and use, so that they would want to keep using it. This is the main point of our product, ensuring the ease of monitoring website usage time so that users will build a sustainable habit.
 
@@ -70,10 +70,15 @@ We gathered a group of our 10 friends and walked them through the installation i
  * **Initially**, we had used pie charts to show the usage time breakdown by website, but that proved to be difficult to read when some websites were used       relatively far less than the rest.
 * Usage times were accurate down to the minute
 * Compared the timing reflected on the dashboard with a manual phone timer when the user was on a webpage. The timings recorded with the plugin was accurate.
- 
-2. Self-evaluation
 
-Personally, we found the dashboard easy to read and navigate. However, after using it, we wanted to make it more interactive for users by allowing them to input the websites that they wanted to flag via a tab where they can insert their own websites.
+2. Survey 
+
+Surveyed friends by posting polls on social media about features that they would prefer to have in a platform like Focus. 88% responded that the interactive dashboard would be sufficient to understand their website usages, and the remaining 12% shared that they would like to have a pop-up window or reminder that prompts them when they are nearing their self-imposed limit. 
+
+ 
+3. Self-evaluation
+
+Personally, we found the dashboard easy to read and navigate. However, after using it, we decided to make it more interactive for users by allowing them to input the websites that they wanted to flag via a tab where they can insert their own websites. Hence, we created a tab that allows users to input up to 20 websites of their own choice that they'd like to flag. 
 
 
 ### Installation Instructions: 
@@ -119,32 +124,33 @@ DB_PASS=<password>
 
 ```npm start```
 
-### Possible Features for the Next Phase 
-
-* Reminder when the user is reaching the time limit
-
-Since our target audience for the application are people who would like to limit their usage on certain flagged sites, we would like to take it further by prompting the user to reduce their usage if their screen time or time on a certain website reaches a certain level. This can possibly be in the form of a reminder.
-
-* Implement data restriction
-
-Do data pre-processing to make sure that no website usage timings from more than a week ago are in the dashboard or else it would be too bloated.
-
- 
-* Blocking those specific websites once the user has exceeded a certain number of hours on it
+### Feature Updates After Milestone 2 
 
 * Custom website selection 
 
 Allows users to input the sites that they'd like to flag. This allows any website to be added to a "watch list", instead of just social media sites.
 Currently, the user can select a list of common "distracting" websites from a pre-defined list. By milestone 3, we hope to add the functionality of allowing the user to input what sites they'd like to monitor on their own.
 
+* Implement data restriction
 
-### Project Schedule
+Do data pre-processing to make sure that no website usage timings from more than a week ago are in the dashboard or else it would be too bloated.
 
-1 July - 6 July: Revise project and discuss possible improvements based on user testing and peer reviews.
+* Ability to change time range when viewing website usage 
 
-7 July - 20 July: Implement features for the next phase and conduct next round of user feedback. Features could include those previously listed and/or any recommended in the peer reviews.
+Allowing the user to see their website usage for a week-long period as well. 
 
-21 July - 28 July: Prepare materials for final milestone (video, poster and clean up repository)
+* Allows users to input their desired time limit 
+
+Text box allows users to input the time limit they would like to keep to for each specified website.
+
+
+### Potential Additional Features 
+
+* Pop-up window: Reminder when the user is reaching the time limit
+
+Since our target audience for the application are people who would like to limit their usage on certain flagged sites, we would like to take it further by prompting the user to reduce their usage if their screen time or time on a certain website reaches a certain level. This can possibly be in the form of a reminder.
+
+* Blocking those specific websites once the user has exceeded a certain number of hours on it
 
 ### Link to Log
 
@@ -152,7 +158,7 @@ Currently, the user can select a list of common "distracting" websites from a pr
 
 **Total Hours:**
 
-* Amelia: 112
-* Pinxi: 115
+* Amelia: 143
+* Pinxi: 
 
 
