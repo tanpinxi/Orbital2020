@@ -136,7 +136,7 @@ Do data pre-processing to make sure that no website usage timings from more than
 
 * Ability to change time range when viewing website usage 
 
-Allowing the user to see their website usage for a week-long period and a month-long period as well. 
+Allowing the user to see their website usage for a week-long period as well. 
 
 
 ### Potential Additional Features 
