@@ -139,6 +139,10 @@ Do data pre-processing to make sure that no website usage timings from more than
 
 Allowing the user to see their website usage for a week-long period as well. 
 
+* Allows users to input their desired time limit 
+
+Text box allows users to input the time limit they would like to keep to for each specified website.
+
 
 ### Potential Additional Features 
 
