@@ -7,13 +7,14 @@ import DashboardItem from "../components/DashboardItem";
 const DashboardItems = [
   {
     id: 0,
-    name: "Usage Breakdown",
+    name: "This Week's Usage Breakdown",
     vizState: {
       query: {
         measures: ["UsageData.totalusage"],
         timeDimensions: [
           {
-            dimension: "UsageData.date"
+            dimension: "UsageData.date",
+            dateRange: "This week"
           }
         ],
         order: {
@@ -34,6 +35,7 @@ const DashboardItems = [
         timeDimensions: [
           {
             dimension: "UsageData.date",
+            dateRange: "This week",
             granularity: "day"
           }
         ],
