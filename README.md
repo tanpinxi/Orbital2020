@@ -169,6 +169,6 @@ Since our target audience for the application are people who would like to limit
 **Total Hours:**
 
 * Amelia: 143
-* Pinxi: 
+* Pinxi: 150
 
 
